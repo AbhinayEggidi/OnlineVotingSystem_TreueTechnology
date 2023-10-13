@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vote</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    button {
+        padding: 8px 16px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Party</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="user1">
+                <td>1</td>
+                <td>aa</td>
+                <td>puspha</td>
+                <td>
+                    <input type="hidden" id="userId" th:value="${userId}">
+                    <button onclick="updateVote('aa')">Vote</button>
+                </td>
+            </tr>
+            <tr id="user2">
+                <td>2</td>
+                <td>prabha</td>
+                <td>salar</td>
+                <td>
+                    <input type="hidden" id="userId" th:value="${userId}">
+                    <button onclick="updateVote('prabha')">Vote</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+     function updateVote(votingValue) {
+    var userId = document.getElementById('userId').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/updateVoting/" + userId + "/" + votingValue, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+               window.location.href = "/success"; 
+            } else if (xhr.status === 302) {
+                // User has already voted, redirect to already voted page
+                window.location.href = "/already_voted.html";
+            } else {
+             window.location.href = "/already_voted";            }
+        }
+    };
+    xhr.send();
+}
+
+    </script>
+</body>
+</html>

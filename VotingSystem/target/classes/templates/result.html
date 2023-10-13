@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voting Results</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Voting Value</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate through the voting counts and display them -->
+            <th:block th:each="entry : ${votingCounts}">
+                <tr>
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+
+    <a href="/login">Go back to login</a>
+</body>
+</html>

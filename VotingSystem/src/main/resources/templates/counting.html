@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voting Counts</title>
+</head>
+<body>
+    <div id="votingCounts">
+        Loading voting counts...
+    </div>
+
+    <script>
+        // Function to fetch voting counts and update the HTML
+        function updateVotingCounts() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/countUsersByVote", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var votingCounts = JSON.parse(xhr.responseText);
+
+                        var votingCountsHtml = "<h2>Voting Counts</h2><ul>";
+                        for (var votingValue in votingCounts) {
+                            votingCountsHtml += "<li>" + votingValue + ": " + votingCounts[votingValue] + " vote(s)</li>";
+                        }
+                        votingCountsHtml += "</ul>";
+
+                        document.getElementById("votingCounts").innerHTML = votingCountsHtml;
+                    } else {
+                        console.error("Failed to fetch voting counts.");
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // Call the function to initially load voting counts
+        updateVotingCounts();
+    </script>
+</body>
+</html>
